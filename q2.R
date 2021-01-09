@@ -22,7 +22,7 @@ medados <-rbind(apply(heptathlon,2,mean),
                 apply(heptathlon,2,max))
 
 rownames(medados)<-c("Média","Var.","DP","CV(%)","Mínimo","Mediana","Máximo")
-
+##Print medados
 medados
 
 # Gráfico de dispersão
