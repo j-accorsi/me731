@@ -58,12 +58,15 @@ tartarugas %>% gather("a", "b", -Sexo) %>%
 # Histogramas
 grid.arrange(tartarugas %>% ggplot()+
                geom_histogram(aes(Largura, fill=Sexo), bins=12, col="black")+
+               labs(y = "")+
                theme_bw(), 
              tartarugas %>% ggplot()+
                geom_histogram(aes(Altura, fill=Sexo), bins=12, col="black")+
+               labs(y = "")+
                theme_bw(),
              tartarugas %>% ggplot()+
                geom_histogram(aes(Comprimento, fill=Sexo), bins=12, col="black")+
+               labs(y = "")+
                theme_bw(),
              nrow=2, ncol=2)
 
