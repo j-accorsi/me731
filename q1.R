@@ -26,18 +26,18 @@ medados <-rbind(apply(tartarugas[1:3],2,mean),
                 apply(tartarugas[1:3],2,max))
                 
 rownames(medados)<-c("Média","Var.","DP","CV(%)","Mínimo","Mediana","Máximo")
-
+    
 medados
 
 # Gráfico de dispersão
 par(mfrow=c(1,1))
 pairs(tartarugas[1:3],
-      col = c("#4DB620", "#80009A")[tartarugas$Sexo],   # Change color by group
-      pch = 19,                            # Change points by group
+      col = c("#4DB620", "#80009A")[tartarugas$Sexo],  # Mudar cor por grupo
+      pch = 19,                                        # Mudar pontos
       labels = c("Comprimento", "Largura", "Altura"),
       oma=c(3,3,3,15))
 par(xpd = TRUE)
-legend("right", col = c("#4DB620", "#80009A"),   # Change color by group
+legend("right", col = c("#4DB620", "#80009A"),
        pch = c(19,19), legend = c("Fêmea","Macho"))
 
 # Boxplot geral

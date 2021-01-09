@@ -25,6 +25,7 @@ rownames(medados)<-c("Média","Var.","DP","CV(%)","Mínimo","Mediana","Máximo")
 ##Print medados
 medados
 
+
 # Gráfico de dispersão
 par(mfrow=c(1,1))
 pairs(heptathlon,
@@ -32,18 +33,16 @@ pairs(heptathlon,
       pch = 19)
 
 
-
+# Matriz de correlações
 cormat <- round(cor(heptathlon),2)
 melted_cormat <- melt(cormat)
 
-
+# Correlograma
 ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value)) + 
   geom_tile()+ 
   scale_fill_distiller()+
   labs(x="", y="", fill="Correlação")+
   theme_bw()
-
-
 
 
 # Histograma
@@ -53,12 +52,14 @@ for(i in 1:8){
        main=colnames(heptathlon)[i],xlab="",ylab="")
 }
 
+
 # Boxplot
 par(mfrow=c(2,4),mar=c(4,4,2,2))
 for(i in 1:8){
   boxplot(as.numeric(unlist(heptathlon[i])),probability=TRUE,
        main=colnames(heptathlon)[i],xlab="",ylab="")
 }
+
 
 # Gráfico Q-Q
 par(mfrow=c(2,4))
