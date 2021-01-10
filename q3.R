@@ -10,7 +10,7 @@ saudemental<-saudemental %>%
 
 chisq.test(saudemental[,-1])
 
-# Tem dependência entre as variáveis
+# Tem dependÃªncia entre as variÃ¡veis
 
 perfil_linha<-saudemental %>% 
   gather(status,qtd,-1) %>% 
@@ -25,3 +25,5 @@ perfil_coluna<-saudemental %>%
   group_by(status) %>% 
   mutate(qtd=qtd/sum(qtd)) %>% 
   spread(status,qtd)
+
+perfil_coluna
