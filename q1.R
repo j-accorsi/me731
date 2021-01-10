@@ -27,7 +27,27 @@ medados <-rbind(apply(tartarugas[1:3],2,mean),
                 
 rownames(medados)<-c("Média","Var.","DP","CV(%)","Mínimo","Mediana","Máximo")
     
-medados
+round(medados,2)
+
+# Sumarias do grupo macho
+round(rbind(apply(tartarugas[tartarugas[4]=="Macho",-4],2,mean),
+            apply(tartarugas[tartarugas[4]=="Macho",-4],2,var),
+            apply(tartarugas[tartarugas[4]=="Macho",-4],2,sd),
+            100*apply(tartarugas[tartarugas[4]=="Macho",-4],2,sd)/
+              apply(tartarugas[tartarugas[4]=="Macho",-4],2,mean),
+            apply(tartarugas[tartarugas[4]=="Macho",-4],2,min),
+            apply(tartarugas[tartarugas[4]=="Macho",-4],2,quantile,0.5),
+            apply(tartarugas[tartarugas[4]=="Macho",-4],2,max)),2)
+
+#Sumarias do grupo femêa
+round(rbind(apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,mean),
+            apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,var),
+            apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,sd),
+            100*apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,sd)/
+              apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,mean),
+            apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,min),
+            apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,quantile,0.5),
+            apply(tartarugas[tartarugas[4]=="Fêmea",-4],2,max)),2)
 
 # Gráfico de dispersão
 par(mfrow=c(1,1))
