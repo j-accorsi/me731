@@ -57,13 +57,15 @@ round(rbind(apply(pima[pima[8]=="pos",-8],2,mean),
 # Gráfico de dispersão
 par(mfrow=c(1,1))
 pairs(pima[-8],
-      col = c("#4DB620", "#80009A")[pima$diabetes],   # Mudar cor por grupo
-      pch = c("\u25CF", "\u25B2")[pima$diabetes],     # Mudar pontos por grupo
+      col = c("#4DB620", "#80009A")[pima$Diabetes],   # Mudar cor por grupo
+      pch = c("\u25CF", "\u25B2")[pima$Diabetes],     # Mudar pontos por grupo
       labels = c("Gravidez", "Glicose", "Pressão", "Tríceps", "Insulina",
                  "IMC", "Idade"),
-      oma=c(3,3,3,20))
+      cex.labels = 2.5,
+      cex.axis = 1.75,
+      oma=c(3,3,6,20))
 par(xpd = TRUE)
-legend("right", col = c("#4DB620", "#80009A"), title = "Diabetes",
+legend("right", col = c("#4DB620", "#80009A"), title = "Diabetes", cex = 1.1,
        pch = c("\u25CF", "\u25B2"), legend = c("Negativo","Positivo"))
 
 
@@ -78,11 +80,9 @@ boxplot(pima[2], xlab="Glicose", cex.axis=1.5, cex.lab=2)
 boxplot(pima[5], xlab="Insulina", cex.axis=1.5, cex.lab=2)
 
 # Boxplot por grupo
-pima = pima %>% mutate(Diabetes = ifelse(Diabetes == "neg", 
-                                         "Negativo", "Positivo"))
-
-
-pima %>% select(Pressão, Tríceps, IMC, Idade, Diabetes) %>%
+pima %>% mutate(Diabetes = ifelse(Diabetes == "neg", 
+                                  "Negativo", "Positivo")) %>% 
+  select(Pressão, Tríceps, IMC, Idade, Diabetes) %>%
   gather("a", "b", -Diabetes) %>%
   ggplot(aes(x=a, y=b, color=Diabetes))+
   geom_boxplot()+
@@ -91,7 +91,20 @@ pima %>% select(Pressão, Tríceps, IMC, Idade, Diabetes) %>%
     y = "",
     color = "Diabetes"
   ) +
-  theme_bw(base_size = 13)
+  theme_bw(base_size = 25)
+
+pima %>% mutate(Diabetes = ifelse(Diabetes == "neg", 
+                                  "Negativo", "Positivo")) %>% 
+  select(Gravidez, Diabetes) %>%
+  gather("a", "b", -Diabetes) %>%
+  ggplot(aes(x=a, y=b, color=Diabetes))+
+  geom_boxplot()+
+  labs(
+    x = "",
+    y = "",
+    color = "Diabetes"
+  ) +
+  theme_bw(base_size = 25)
 
 
 # Correlograma
@@ -99,14 +112,15 @@ melt(cor(pima[-8])) %>% ggplot(aes(x=Var2, y=Var1, fill=value)) +
   geom_tile()+ 
   scale_fill_distiller()+
   labs(x="", y="", fill="Correlação")+
-  theme_bw()
+  theme_bw(base_size = 20)
 
 
 # Histograma
 par(mfrow=c(2,4))
 for(i in 1:7){
   hist(as.numeric(unlist(pima[i])), probability=TRUE, col="#EE6060",
-       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="")
+       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="",
+       cex.axis=1.5, cex.main=2)
 }
 
 

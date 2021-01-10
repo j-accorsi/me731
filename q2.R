@@ -56,14 +56,15 @@ ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value)) +
   geom_tile()+ 
   scale_fill_distiller()+
   labs(x="", y="", fill="Correlação")+
-  theme_bw()
+  theme_bw(base_size = 16)
 
 
 # Histograma
 par(mfrow=c(2,4),mar=c(4,4,2,2))
 for(i in 1:8){
   hist(as.numeric(unlist(heptathlon[i])),probability=TRUE, col="#EE6060",
-       main=colnames(cormat)[i],xlab="",ylab="")
+       main=colnames(cormat)[i],xlab="",ylab="",
+       cex.axis=1.5, cex.main=1.3)
 }
 
 

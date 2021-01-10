@@ -54,11 +54,14 @@ par(mfrow=c(1,1))
 pairs(tartarugas[1:3],
       col = c("#4DB620", "#80009A")[tartarugas$Sexo],  # Mudar cor por grupo
       pch = 19,                                        # Mudar pontos
-      labels = c("Comprimento", "Largura", "Altura"),
+      labels = c("Comprimento", "Largura", "Altura"), 
+      cex.labels = 2.5,
+      cex.axis = 1.75,
       oma=c(3,3,3,15))
 par(xpd = TRUE)
 legend("right", col = c("#4DB620", "#80009A"),
-       pch = c(19,19), legend = c("Fêmea","Macho"))
+       pch = c(19,19), legend = c("Fêmea","Macho"),
+       cex = 1.35)
 
 # Boxplot geral
 par(mfrow=c(1,1))
@@ -69,11 +72,11 @@ tartarugas %>% gather("a", "b", -Sexo) %>%
   ggplot(aes(x=a, y=b, color=Sexo))+
   geom_boxplot()+
   labs(
-    x = "Variável",
+    x = "",
     y = "",
     color = "Sexo"
   ) +
-  theme_bw(base_size = 13)
+  theme_bw(base_size = 25)
 
 # Histogramas
 grid.arrange(tartarugas %>% ggplot()+
@@ -95,8 +98,8 @@ par(mfrow=c(2,2))
 for(i in 1:3){
   qqPlot(scale(tartarugas[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#80009A",pch = 19, col="#108A0C",
-         xlab="Quantil da N(0,1)",ylab=colnames(tartarugas)[i])
-}
+         xlab="",ylab=colnames(tartarugas)[i], cex = 0.8)
+  }
 
 ################################################################################
 ################################# Modelagem ####################################
