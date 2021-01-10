@@ -78,29 +78,67 @@ tartarugas %>% gather("a", "b", -Sexo) %>%
   ) +
   theme_bw(base_size = 25)
 
+g_legend <- function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)
+}
+p1 <- tartarugas %>% ggplot()+
+  geom_histogram(aes(Largura, fill=Sexo), bins=12, col="black")+
+  labs(y = "")+
+  theme_bw()
+mylegend<-g_legend(p1)
+
 # Histogramas
-grid.arrange(tartarugas %>% ggplot()+
-               geom_histogram(aes(Largura, fill=Sexo), bins=12, col="black")+
-               labs(y = "")+
-               theme_bw(), 
-             tartarugas %>% ggplot()+
-               geom_histogram(aes(Altura, fill=Sexo), bins=12, col="black")+
-               labs(y = "")+
-               theme_bw(),
-             tartarugas %>% ggplot()+
-               geom_histogram(aes(Comprimento, fill=Sexo), bins=12, col="black")+
-               labs(y = "")+
-               theme_bw(),
-             nrow=2, ncol=2)
+grid.arrange(
+  tartarugas %>% filter(Sexo == "Fêmea") %>%
+    ggplot()+
+    geom_histogram(aes(Largura), fill="#4DB620", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(), 
+  tartarugas %>% filter(Sexo == "Macho") %>%
+    ggplot()+
+    geom_histogram(aes(Largura), fill="#80009A", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(),
+  tartarugas %>% filter(Sexo == "Fêmea") %>%
+    ggplot()+
+    geom_histogram(aes(Altura), fill="#4DB620", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(),
+  tartarugas %>% filter(Sexo == "Macho") %>%
+    ggplot()+
+    geom_histogram(aes(Altura), fill="#80009A", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(),
+  tartarugas %>% filter(Sexo == "Fêmea")%>% 
+    ggplot()+
+    geom_histogram(aes(Comprimento), fill="#4DB620", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(),
+  tartarugas %>% filter(Sexo == "Macho")%>% 
+    ggplot()+
+    geom_histogram(aes(Comprimento), fill="#80009A", bins=12, col="black")+
+    labs(y = "")+
+    theme_bw(),
+  nrow=3, ncol=2
+)
 
 # Gráfico Q-Q
 par(mfrow=c(2,2))
 for(i in 1:3){
-  qqPlot(scale(tartarugas[i]),dist="norm", id=F,
-         mean=0,sd=1,col.lines="#80009A",pch = 19, col="#108A0C",
-         xlab="",ylab=colnames(tartarugas)[i], cex = 0.8)
-  }
+  qqPlot(scale((tartarugas %>% filter(Sexo == "Fêmea"))[i]),dist="norm", id=F,
+         mean=0,sd=1,col.lines="#F26514",pch = 19, col="#108A0C", xlab = "",
+         ylab=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i])
+}
 
+par(mfrow=c(2,2))
+for(i in 1:3){
+  qqPlot(scale((tartarugas %>% filter(Sexo == "Macho"))[i]),dist="norm", id=F,
+         mean=0,sd=1,col.lines="#F26514",pch = 19, col="#80009A", xlab = "",
+         ylab=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i])
+}
 ################################################################################
 ################################# Modelagem ####################################
 ################################################################################
