@@ -130,14 +130,14 @@ par(mfrow=c(2,2))
 for(i in 1:3){
   qqPlot(scale((tartarugas %>% filter(Sexo == "Fêmea"))[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#F26514",pch = 19, col="#108A0C", xlab = "",
-         ylab=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i])
+         main=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i], ylab = "")
 }
 
 par(mfrow=c(2,2))
 for(i in 1:3){
   qqPlot(scale((tartarugas %>% filter(Sexo == "Macho"))[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#F26514",pch = 19, col="#80009A", xlab = "",
-         ylab=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i])
+         main=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i], ylab = "")
 }
 ################################################################################
 ################################# Modelagem ####################################

@@ -118,21 +118,35 @@ melt(cor(pima[-8])) %>% ggplot(aes(x=Var2, y=Var1, fill=value)) +
 # Histograma
 par(mfrow=c(2,4))
 for(i in 1:7){
-  hist(as.numeric(unlist(pima[i])), probability=TRUE, col="#EE6060",
-       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="",
-       cex.axis=1.5, cex.main=2)
+  hist(as.numeric(unlist((pima %>% filter(Diabetes == "neg"))[i])),
+       probability=TRUE, col="#4DB620", cex.axis = 1.5, cex.main = 2,
+       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="")
+}
+
+par(mfrow=c(2,4))
+for(i in 1:7){
+  hist(as.numeric(unlist((pima %>% filter(Diabetes == "pos"))[i])),
+       probability=TRUE, col="#80009A", cex.axis = 1.5, cex.main = 2,
+       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="")
 }
 
 
 # Gráfico Q-Q
 par(mfrow=c(2,4))
-for(i in 1:8){
-  qqPlot(scale(pima[i]),dist="norm", id=F,
-         mean=0,sd=1,col.lines="#80009A",pch = 19, col="#108A0C",
-         xlab="",ylab=stringr::str_to_title(colnames(pima)[i]))
+for(i in 1:7){
+  qqPlot(scale((pima %>% filter(Diabetes == "neg"))[i]),
+         dist="norm", id=F, ylab = "", col="#4DB620",
+         mean = 0, sd = 1,col.lines = "#F26514", pch = 19,
+         xlab = "", main=stringr::str_to_title(colnames(pima)[i]))
 }
 
-
+par(mfrow=c(2,4))
+for(i in 1:7){
+  qqPlot(scale((pima %>% filter(Diabetes == "pos"))[i]),
+         dist="norm", id=F, ylab = "", col="#80009A",
+         mean = 0, sd = 1,col.lines = "#F26514", pch = 19,
+         xlab = "", main=stringr::str_to_title(colnames(pima)[i]))
+}
 ################################################################################
 ################################# Modelagem ####################################
 ################################################################################
