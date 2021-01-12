@@ -86,7 +86,7 @@ par(mfrow=c(2,4))
 for(i in 1:8){
   qqPlot(scale(heptathlon[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#80009A",pch = 19, col="#108A0C",
-         xlab="",ylab=nomes[i], cex=0.8)
+         xlab="", main=nomes[i], ylab="", cex=0.8)
 }
 
 ################################################################################

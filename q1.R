@@ -126,14 +126,14 @@ grid.arrange(
 )
 
 # Gráfico Q-Q
-par(mfrow=c(2,2))
+par(mfrow=c(1,3))
 for(i in 1:3){
   qqPlot(scale((tartarugas %>% filter(Sexo == "Fêmea"))[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#F26514",pch = 19, col="#108A0C", xlab = "",
          main=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i], ylab = "")
 }
 
-par(mfrow=c(2,2))
+par(mfrow=c(1,3))
 for(i in 1:3){
   qqPlot(scale((tartarugas %>% filter(Sexo == "Macho"))[i]),dist="norm", id=F,
          mean=0,sd=1,col.lines="#F26514",pch = 19, col="#80009A", xlab = "",
@@ -147,8 +147,8 @@ for(i in 1:3){
 # Dois ou mais vetores de médias
 teste_mu1mu2_Homocedast <- function(m_X_completa, v_grupos, Delta, alpha)
 {
-  m_X_1 <-  m_X_completa[v.grupos==1,]
-  m_X_2 <-  m_X_completa[v.grupos==2,]
+  m_X_1 <-  m_X_completa[v_grupos==1,]
+  m_X_2 <-  m_X_completa[v_grupos==2,]
   p<- ncol(m_X_1)
   v_n <- rbind(nrow(m_X_1),nrow(m_X_2))
   v_mu1 <-  cbind(apply(m_X_1,2,mean))
@@ -166,7 +166,13 @@ teste_mu1mu2_Homocedast <- function(m_X_completa, v_grupos, Delta, alpha)
   e.pnc = e_F
   e.pt = 1 - pf(fc,df1,df2,ncp=e.pnc) # poder aproximado
   cat("Estatística do Teste: ",e_F,"\n")
-  cat("nível descritivo: ",p_valor,"\n")
+  cat("Nível descritivo: ",p_valor,"\n")
   cat("Estimativa do poder do teste: ",e.pt,"\n")
   result <- list(e_F=e_F,p.valor=p_valor,e.pt=e.pt)
 } 
+
+
+teste_mu1mu2_Homocedast(as.matrix(tartarugas[-4]),
+                        cbind(as.numeric(unlist(tartarugas[4]))),
+                        rbind(0,0,0),
+                        0.05)
