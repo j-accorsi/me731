@@ -139,6 +139,34 @@ for(i in 1:3){
          mean=0,sd=1,col.lines="#F26514",pch = 19, col="#80009A", xlab = "",
          main=colnames((tartarugas %>% filter(Sexo == "Fêmea")))[i], ylab = "")
 }
+
 ################################################################################
-################################# Modelagem ####################################
+############################## Analise Inferencial #############################
 ################################################################################
+
+# Dois ou mais vetores de médias
+teste_mu1mu2_Homocedast <- function(m_X_completa, v_grupos, Delta, alpha)
+{
+  m_X_1 <-  m_X_completa[v.grupos==1,]
+  m_X_2 <-  m_X_completa[v.grupos==2,]
+  p<- ncol(m_X_1)
+  v_n <- rbind(nrow(m_X_1),nrow(m_X_2))
+  v_mu1 <-  cbind(apply(m_X_1,2,mean))
+  v_mu2 <-  cbind(apply(m_X_2,2,mean))
+  m_Sigma1 <- cov(m_X_1)
+  m_Sigma2 <- cov(m_X_2)
+  m_SigmaP <- ((v_n[1]-1)*m_Sigma1 + (v_n[2]-1)*m_Sigma2)/(v_n[1] + v_n[2] - 2)
+  e_F <- (1/(1/v_n[1] + 1/v_n[2]))*(t(((v_mu1 - v_mu2) - Delta))) %*% 
+    solve(m_SigmaP) %*% (((v_mu1 - v_mu2) - Delta))
+  df1 <- p
+  df2 <- v_n[1] + v_n[2] - p - 1
+  e_F <- e_F *df2/(df1*(v_n[1] + v_n[2] - 2))
+  p_valor <- 1 - pf(e_F,df1,df2)
+  fc = qf(1 - alpha,df1,df2)
+  e.pnc = e_F
+  e.pt = 1 - pf(fc,df1,df2,ncp=e.pnc) # poder aproximado
+  cat("Estatística do Teste: ",e_F,"\n")
+  cat("nível descritivo: ",p_valor,"\n")
+  cat("Estimativa do poder do teste: ",e.pt,"\n")
+  result <- list(e_F=e_F,p.valor=p_valor,e.pt=e.pt)
+} 
