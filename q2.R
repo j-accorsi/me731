@@ -52,18 +52,29 @@ rownames(cormat) <- c("100m com\n barreiras", "Salto em\n altura",
 melted_cormat <- melt(cormat)
 
 # Correlograma
-ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value)) + 
+ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value))+ 
+  theme_bw(base_size = 16)+
   geom_tile()+ 
   scale_fill_distiller()+
   labs(x="", y="", fill="Correlação")+
-  theme_bw(base_size = 16)
+  geom_text(label = melted_cormat$value)
+
+
+# Nomes
+nomes <- c("100m com barreiras", "Salto em altura",
+           "Arremesso de peso", "200m rasos", 
+           "Salto em distância", "Lançamento de dardos",
+           "800m rasos", "Score")
+
+# Unidades de Medida
+UM = c('Tempo (s)', 'Altura (m)', 'Distância (m)', 'Tempo (s)', 'Distância (m)', 'Distância (m)', 'Tempo (s)', 'Pontuação')
 
 
 # Histograma
 par(mfrow=c(2,4),mar=c(4,4,2,2))
 for(i in 1:8){
   hist(as.numeric(unlist(heptathlon[i])),probability=TRUE, col="#EE6060",
-       main=colnames(cormat)[i],xlab="",ylab="",
+       main=colnames(cormat)[i],xlab="",ylab=UM[i],
        cex.axis=1.5, cex.main=1.3)
 }
 
@@ -72,14 +83,8 @@ for(i in 1:8){
 par(mfrow=c(2,4),mar=c(4,4,2,2))
 for(i in 1:8){
   boxplot(as.numeric(unlist(heptathlon[i])),probability=TRUE,
-       main=colnames(heptathlon)[i],xlab="",ylab="")
+       main=nomes[i],xlab="",ylab=UM[i])
 }
-
-# Nomes
-nomes <- c("100m com barreiras", "Salto em altura",
-           "Arremesso de peso", "200m rasos", 
-           "Salto em distância", "Lançamento de dardos",
-           "800m rasos", "Score")
 
 # Gráfico Q-Q
 par(mfrow=c(2,4))

@@ -112,7 +112,8 @@ melt(cor(pima[-8])) %>% ggplot(aes(x=Var2, y=Var1, fill=value)) +
   geom_tile()+ 
   scale_fill_distiller()+
   labs(x="", y="", fill="Correlação")+
-  theme_bw(base_size = 20)
+  theme_bw(base_size = 20)+
+  geom_text(label = round(melt(cor(pima[-8]))$value,2))
 
 
 # Histograma

@@ -73,7 +73,7 @@ tartarugas %>% gather("a", "b", -Sexo) %>%
   geom_boxplot()+
   labs(
     x = "",
-    y = "",
+    y = "Milímetros",
     color = "Sexo"
   ) +
   theme_bw(base_size = 25)
@@ -95,7 +95,7 @@ grid.arrange(
   tartarugas %>% filter(Sexo == "Fêmea") %>%
     ggplot()+
     geom_histogram(aes(Largura), fill="#4DB620", bins=12, col="black")+
-    labs(y = "")+
+    labs(y = "Frequência")+
     theme_bw(), 
   tartarugas %>% filter(Sexo == "Macho") %>%
     ggplot()+
@@ -105,7 +105,7 @@ grid.arrange(
   tartarugas %>% filter(Sexo == "Fêmea") %>%
     ggplot()+
     geom_histogram(aes(Altura), fill="#4DB620", bins=12, col="black")+
-    labs(y = "")+
+    labs(y = "Frequência")+
     theme_bw(),
   tartarugas %>% filter(Sexo == "Macho") %>%
     ggplot()+
@@ -115,7 +115,7 @@ grid.arrange(
   tartarugas %>% filter(Sexo == "Fêmea")%>% 
     ggplot()+
     geom_histogram(aes(Comprimento), fill="#4DB620", bins=12, col="black")+
-    labs(y = "")+
+    labs(y = "Frequência")+
     theme_bw(),
   tartarugas %>% filter(Sexo == "Macho")%>% 
     ggplot()+
@@ -176,3 +176,4 @@ teste_mu1mu2_Homocedast(as.matrix(tartarugas[-4]),
                         cbind(as.numeric(unlist(tartarugas[4]))),
                         rbind(0,0,0),
                         0.05)
+
