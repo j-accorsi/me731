@@ -100,19 +100,19 @@ ACaux <-function(m.X)
   return(list(inercia=inercia,m.R=m.R,m.C=m.C))
 }
 
-aux<-ACaux(as.matrix(saudemental[,-1]))
-aux$inercia<-cbind(aux$inercia,aux$inercia/sum(aux$inercia),rep(0,nrow(aux$inercia)))
+
+# Matriz linha e coluna:
+
+aux<-ACaux(m.saude)
 
 
-for(i in 1:nrow(aux$inercia)){
-  if(i==1){
-    aux$inercia[1,3]=aux$inercia[1,2]
-  }else{
-    aux$inercia[i,3]=aux$inercia[i-1,3]+aux$inercia[i,2]
-  }
-}
+saudeca<-ca(m.saude)
 
+# Matriz de inércia:
 
-summary(resultCA)$scree
+aux$inercia<-summary(saudeca)$scree
 
+# Bi-plot:
 
+resultFCA <- plot(saudeca,xlab="componente 1",ylab="componente 2")
+biplot(resultFCA$rows,resultFCA$cols,var.axes=FALSE,xlab="componente 1", ylab="componente 2",cex=1.2)
