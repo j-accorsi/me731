@@ -6,6 +6,7 @@ library(car)
 library(HSAUR2)
 library(reshape2)
 library(factoextra)
+library(corrplot)
 
 # Leitura dos dados
 data("heptathlon")
@@ -53,7 +54,7 @@ rownames(cormat) <- c("100m com\n barreiras", "Salto em\n altura",
 
 melted_cormat <- melt(cormat)
 
-# Correlograma
+# Correlograma #1
 ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value))+ 
   theme_bw(base_size = 16)+
   geom_tile()+ 
@@ -61,6 +62,9 @@ ggplot(data = melted_cormat, aes(x=Var2, y=Var1, fill=value))+
   labs(x="", y="", fill="Correlação")+
   geom_text(label = melted_cormat$value)
 
+# Correlograma #2
+corrplot(cormat, method="color", tl.cex = 1.5, type="full",
+         addCoef.col = "black", tl.col = "black")
 
 # Nomes
 nomes <- c("100m com barreiras", "Salto em altura",
