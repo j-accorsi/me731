@@ -1,4 +1,4 @@
-# Importando pacotes:
+#Importando pacotes:
 library(tidyverse)
 library(readr)
 library(MASS)
@@ -36,25 +36,74 @@ grid.arrange(
 ############################## Analise Inferencial #############################
 ################################################################################
 
+# Teste qui-quadrado:
+
 saudemental<-saudemental %>% 
   spread(name,value)
 
 chisq.test(saudemental[,-1])
 
-# Tem dependência entre as variáveis
+# Perfil linha, coluna e matrix inercia:
 
-perfil_linha<-saudemental %>% 
-  gather(status,qtd,-1) %>% 
-  group_by(saude) %>% 
-  mutate(qtd=qtd/sum(qtd)) %>% 
-  spread(status,qtd)
+ACaux <-function(m.X)     
+{
+  n.I <- nrow(m.X)
+  n.J <- ncol(m.X)
+  m.X.completa <- cbind(m.X,apply(m.X,1,sum))
+  m.X.completa <- rbind(m.X.completa,apply(m.X.completa,2,sum))
   
-perfil_linha
+  # Matriz de proporções
+  m.P <-  m.X.completa/sum(m.X)
+  
+  # Vetor Pr e Pc
+  P.r <- cbind(m.P[,n.J+1])
+  P.c <- cbind(m.P[n.I+1,])
+  
+  # Matrizes Dr e Dc
+  D.r <- diag(c(P.r),n.I+1,n.I+1)
+  D.c <- diag(c(P.c),n.J+1,n.J+1)
+  
+  # Perfis das linhas e colunas
+  m.R <- solve(D.r)%*%m.P
+  m.C <- t(solve(D.c)%*%t(m.P))
+  round(m.R*100,2)
+  
+  #t(round(m.C*100,2))
+  
+  m.P.aux <- m.P[1:n.I,1:n.J]
+  P.c.aux <- cbind(P.c[1:n.J,])
+  P.r.aux <- cbind(P.r[1:n.I,])
+  D.r.aux <- diag(sqrt(c(P.r.aux)),n.I,n.I)
+  D.c.aux <- diag(sqrt(c(P.c.aux)),n.J,n.J)
+  m.P.rc <- (solve(D.r.aux))%*%(m.P.aux - P.r.aux%*%t(P.c.aux))%*%(solve(D.c.aux))
+  result.svd <- svd(m.P.rc)
+  v.gamma <- cbind(result.svd$d)
+  inercia <- (v.gamma^2)
+  #round(cbind(v.gamma,inercia),4)
+  
+  # Valor singular é raiz quadrada do autovalor (positivo)
+  eigen1 <- eigen(m.P.rc%*%t(m.P.rc))
+  eigen2 <- eigen(t(m.P.rc)%*%(m.P.rc))
+  m.Gamma <- diag(result.svd$d,min(n.I,n.J),min(n.I,n.J))
+  m.U <- (result.svd$u)
+  m.V <- (result.svd$v)
+  
+  # componentes
+  m.PL <- (solve(D.r.aux)%*%m.U%*%(m.Gamma))
+  m.PC <- (solve(D.c.aux)%*%m.V%*%(m.Gamma))
+  m.FullLC <- rbind(m.PL,m.PC)
+  #result.AC.inercia <- list(v.gamma=v.gamma,inercia=inercia)
+  return(list(inercia=inercia,m.R=m.R,m.C=m.C))
+}
 
-perfil_coluna<-saudemental %>% 
-  gather(status,qtd,-1) %>% 
-  group_by(status) %>% 
-  mutate(qtd=qtd/sum(qtd)) %>% 
-  spread(status,qtd)
+aux<-ACaux(as.matrix(saudemental[,-1]))
+aux$inercia<-cbind(aux$inercia,aux$inercia/sum(aux$inercia),rep(0,nrow(aux$inercia)))
 
-perfil_coluna
+
+for(i in 1:nrow(aux$inercia)){
+  if(i==1){
+    aux$inercia[1,3]=aux$inercia[1,2]
+  }else{
+    aux$inercia[i,3]=aux$inercia[i-1,3]+aux$inercia[i,2]
+  }
+}
