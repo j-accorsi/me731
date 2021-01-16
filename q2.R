@@ -67,7 +67,8 @@ nomes <- c("100m com barreiras", "Salto em altura",
            "800m rasos", "Score")
 
 # Unidades de Medida
-UM = c('Tempo (s)', 'Altura (m)', 'Distância (m)', 'Tempo (s)', 'Distância (m)', 'Distância (m)', 'Tempo (s)', 'Pontuação')
+UM = c('Tempo (s)', 'Altura (m)', 'Distância (m)', 'Tempo (s)', 
+       'Distância (m)', 'Distância (m)', 'Tempo (s)', 'Pontuação')
 
 
 # Histograma
@@ -95,5 +96,6 @@ for(i in 1:8){
 }
 
 ################################################################################
-################################# Modelagem ####################################
+############################## Analise Inferencial #############################
 ################################################################################
+
