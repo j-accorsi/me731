@@ -2,8 +2,12 @@
 library(tidyverse)
 library(readr)
 library(MASS)
+library(ca)
 
 saudemental<-read_csv("dados/saudeMental.csv")
+m.saude<-as.matrix(saudemental[,-1])
+dimnames(m.saude)<-list(c(saudemental[,1])$saude,names(saudemental)[-1])
+
 
 ################################################################################
 ############################# Analise Descritiva ###############################
@@ -107,3 +111,8 @@ for(i in 1:nrow(aux$inercia)){
     aux$inercia[i,3]=aux$inercia[i-1,3]+aux$inercia[i,2]
   }
 }
+
+
+summary(resultCA)$scree
+
+
