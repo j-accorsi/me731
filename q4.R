@@ -107,7 +107,7 @@ pima %>% mutate(Diabetes = ifelse(Diabetes == "neg",
   theme_bw(base_size = 25)
 
 
-# Correlograma
+# Correlograma #1
 melt(cor(pima[-8])) %>% ggplot(aes(x=Var2, y=Var1, fill=value)) + 
   geom_tile()+ 
   scale_fill_distiller()+
@@ -115,20 +115,26 @@ melt(cor(pima[-8])) %>% ggplot(aes(x=Var2, y=Var1, fill=value)) +
   theme_bw(base_size = 20)+
   geom_text(label = round(melt(cor(pima[-8]))$value,2))
 
+# Correlograma #2
+corrplot(cor(pima[-8]), method="color", tl.cex = 1.5, type="full",
+         addCoef.col = "black", tl.col = "black")
+
 
 # Histograma
 par(mfrow=c(2,4))
 for(i in 1:7){
   hist(as.numeric(unlist((pima %>% filter(Diabetes == "neg"))[i])),
        probability=TRUE, col="#4DB620", cex.axis = 1.5, cex.main = 2,
-       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="")
+       main=stringr::str_to_title(colnames(pima)[i]), xlab="", 
+       ylab="Frequência", cex.lab=1.3)
 }
 
 par(mfrow=c(2,4))
 for(i in 1:7){
   hist(as.numeric(unlist((pima %>% filter(Diabetes == "pos"))[i])),
        probability=TRUE, col="#80009A", cex.axis = 1.5, cex.main = 2,
-       main=stringr::str_to_title(colnames(pima)[i]), xlab="", ylab="")
+       main=stringr::str_to_title(colnames(pima)[i]), xlab="", 
+       ylab="Frequência", cex.lab=1.3)
 }
 
 
