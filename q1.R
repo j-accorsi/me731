@@ -430,21 +430,21 @@ m_ep_alt <-  sqrt(diag(m_mu_alt%*%m_Sigmabeta%*%t(m_mu_alt)))
 m_IC_alt <- cbind(m_pre_alt-1.96*m_ep_alt,m_pre_alt+1.96*m_ep_alt)
 
 #
-par(mfrow=c(2,2))
-plotCI(m_pre_comp,ui=m_IC_comp[,2],li=m_IC_comp[,1],axes=FALSE,xlab="Sexo",
+par(mfrow=c(1,3))
+plotCI(m_pre_comp,ui=m_IC_comp[,2],li=m_IC_comp[,1],axes=FALSE,xlab="",
        ylab="Média",pch=19,cex=1.2,cex.lab=1.2,cex.axis=1.2,main="Comprimento")
 lines(mean(tartarugas$Comprimento),pch=17,col="gray",cex=1.2,type="p")
 axis(2,seq(4,7,0.2),cex.axis=1.2)
 axis(1,1:2,c("Fêmea","Macho"),cex.axis=1.2)
 #
 plotCI(m_pre_lag,ui=m_IC_lag[,2],li=m_IC_lag[,1],axes=FALSE,xlab="Sexo",
-       ylab="Média",pch=19,cex=1.2,cex.lab=1.2,cex.axis=1.2,main="Largura")
+       ylab="",pch=19,cex=1.2,cex.lab=1.2,cex.axis=1.2,main="Largura")
 lines(mean(tartarugas$Largura),pch=17,col="gray",cex=1.2,type="p")
 axis(2,seq(2,4,0.2),cex.axis=1.2)
 axis(1,1:2,c("Fêmea","Macho"),cex.axis=1.2)
 #
-plotCI(m_pre_alt,ui=m_IC_alt[,2],li=m_IC_alt[,1],axes=FALSE,xlab="Sexo",
-       ylab="Média",pch=19,cex=1.2,cex.lab=1.2,cex.axis=1.2,main="Altura")
+plotCI(m_pre_alt,ui=m_IC_alt[,2],li=m_IC_alt[,1],axes=FALSE,xlab="",
+       ylab="",pch=19,cex=1.2,cex.lab=1.2,cex.axis=1.2,main="Altura")
 lines(mean(tartarugas$Altura),pch=17,col="gray",cex=1.2,type="p")
 axis(2,seq(1,6,0.2),cex.axis=1.2)
 axis(1,1:2,c("Fêmea","Macho"),cex.axis=1.2)
