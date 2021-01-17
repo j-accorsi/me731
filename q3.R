@@ -3,11 +3,15 @@ library(tidyverse)
 library(readr)
 library(MASS)
 library(ca)
+library(factoextra)
+library(xtable)
 
 saudemental<-read_csv("dados/saudeMental.csv")
+saudemental<-saudemental %>% 
+  spread(name,value)
 m.saude<-as.matrix(saudemental[,-1])
 dimnames(m.saude)<-list(c(saudemental[,1])$saude,names(saudemental)[-1])
-
+m.saude<-m.saude[c(1,3,4,2),]
 
 ################################################################################
 ############################# Analise Descritiva ###############################
@@ -41,9 +45,6 @@ grid.arrange(
 ################################################################################
 
 # Teste qui-quadrado:
-
-saudemental<-saudemental %>% 
-  spread(name,value)
 
 chisq.test(saudemental[,-1])
 
@@ -112,7 +113,10 @@ saudeca<-ca(m.saude)
 
 aux$inercia<-summary(saudeca)$scree
 
+
 # Bi-plot:
 
-resultFCA <- plot(saudeca,xlab="componente 1",ylab="componente 2")
-biplot(resultFCA$rows,resultFCA$cols,var.axes=FALSE,xlab="componente 1", ylab="componente 2",cex=1.2)
+
+fviz_ca_biplot(saudeca,title = "")
+
+
