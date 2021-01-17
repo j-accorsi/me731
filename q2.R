@@ -7,6 +7,7 @@ library(HSAUR2)
 library(reshape2)
 library(factoextra)
 library(corrplot)
+library(FactoMineR)
 
 # Leitura dos dados
 data("heptathlon")
@@ -160,7 +161,13 @@ par(mfrow=c(1,1))
 biplot(result_cp_cor,cex=1)
 
 # Biplot factoextra
-fviz_pca_biplot(result_cp_cor)
+result_cp_cor <- PCA(heptathlon, graph = FALSE)
+fviz_pca_biplot(result_cp_cor,
+                pointshape = 19,
+                pointsize = 1.5,
+                col.ind = "black",
+                title = "",
+                repel = TRUE)
 
 # Biplot sem nome
 fviz_pca_biplot(result_cp_cor, 
