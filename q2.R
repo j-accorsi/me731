@@ -113,7 +113,7 @@ aut_val <- eigen(m_cor)$values
 round(aut_val,2)
 
 # Auto vetores
-aut_vec <- -(eigen(m_cor)$vectors)
+aut_vec <- (eigen(m_cor)$vectors)
 round(aut_vec,2)
 
 p <- 8 # numero de variaveis
@@ -132,7 +132,8 @@ screeplot(result_cp_cor, type = c("lines"), main = "",
 
 # Grafico do PV
 fviz_eig(result_cp_cor, addlabels = TRUE, xlab = "Componentes", main = "",
-         ylab = "Percentual de variancia explicada", ggtheme = theme_bw(base_size = 16))
+         ylab = "Percentual de variancia explicada",
+         ggtheme = theme_bw(base_size = 16))
 
 # primeiros autovetores
 mcps <- t(round(aut_vec[,1:2],2))
@@ -144,8 +145,8 @@ mcorcps <- t(round(corr_cp_var[,1:2],2))
 colnames(mcorcps) <- nomes
 mcorcps
 
-cp1 <- -cbind((result_cp_cor$scores)[,1])
-cp2 <- -cbind((result_cp_cor$scores)[,2])
+cp1 <- cbind((result_cp_cor$scores)[,1])
+cp2 <- cbind((result_cp_cor$scores)[,2])
 boxplot(cbind(cp1,cp2), cex.lab = 1.2, xlab = "CP")
 
 par(mfrow=c(1,2))
@@ -161,7 +162,7 @@ par(mfrow=c(1,1))
 biplot(result_cp_cor,cex=1)
 
 # Biplot factoextra
-result_cp_cor <- PCA(heptathlon, graph = FALSE)
+#result_cp_cor <- PCA(heptathlon, graph = FALSE)
 fviz_pca_biplot(result_cp_cor,
                 pointshape = 19,
                 pointsize = 1.5,
