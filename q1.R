@@ -294,24 +294,24 @@ gen_graf_resid<-function(mY,mresult,var,typeresid,wplot)
     par(mfrow =c(2,2))
     plot(mresiduo[,var],
          ylim=c(min(-3,min(mresiduo[,var])),max(3,max(mresiduo[,var]))),
-         xlab="índice",ylab="resíduo studentizado")
+         xlab="Índice",ylab="Resíduo studentizado")
     abline(-2,0,lty=2)
     abline(2,0,lty=2)
     abline(0,0,lty=2)
     #
     plot(mfit[,var],mresiduo[,var],
          ylim=c(min(-3,min(mresiduo[,var])),max(3,max(mresiduo[,var]))),
-         xlab="valor ajustado",ylab="resíduo studentizado")
+         xlab="Valor ajustado",ylab="Resíduo studentizado")
     abline(-2,0,lty=2)
     abline(2,0,lty=2)
     abline(0,0,lty=2)
     #
-    hist(mresiduo[,var],probability=TRUE,xlab="resíduo studentizado",
-         main="",ylab="densidade")
+    hist(mresiduo[,var],probability=TRUE,xlab="Resíduo studentizado",
+         main="",ylab="Densidade")
     #
     qqPlot((mresiduo[,var]),dist="norm",mean=0,sd=1,col.lines=1,
-           grid="FALSE",xlab="quantil da N(0,1)",
-           ylab=paste("quantil do resíduo studentizado"),cex=1.2)
+           grid="FALSE",xlab="Quantil da N(0,1)",
+           ylab=paste("Quantil do resíduo studentizado"),cex=1.2)
   }
   
   else if (wplot == "envelope")
