@@ -294,31 +294,36 @@ gen_graf_resid<-function(mY,mresult,var,typeresid,wplot)
     par(mfrow =c(2,2))
     plot(mresiduo[,var],
          ylim=c(min(-3,min(mresiduo[,var])),max(3,max(mresiduo[,var]))),
-         xlab="Índice",ylab="Resíduo studentizado")
-    abline(-2,0,lty=2)
-    abline(2,0,lty=2)
-    abline(0,0,lty=2)
+         xlab="Índice",ylab="Resíduo studentizado", pch = 19, col="#108A0C",
+         cex.axis=1.5, cex.main=1.3, cex.lab = 1.3)
+    abline(-2,0,lty=2, col = "#80009A", lwd=2)
+    abline(2,0,lty=2, col = "#80009A", lwd=2)
+    abline(0,0,lty=2, col = "#80009A", lwd=2)
     #
     plot(mfit[,var],mresiduo[,var],
          ylim=c(min(-3,min(mresiduo[,var])),max(3,max(mresiduo[,var]))),
-         xlab="Valor ajustado",ylab="Resíduo studentizado")
-    abline(-2,0,lty=2)
-    abline(2,0,lty=2)
-    abline(0,0,lty=2)
+         xlab="Valor ajustado",ylab="Resíduo studentizado", pch = 19, 
+         col="#108A0C",
+         cex.axis=1.5, cex.main=1.3, cex.lab = 1.3)
+    abline(-2,0,lty=2, col = "#80009A", lwd=2)
+    abline(2,0,lty=2, col = "#80009A", lwd=2)
+    abline(0,0,lty=2, col = "#80009A", lwd=2)
     #
     hist(mresiduo[,var],probability=TRUE,xlab="Resíduo studentizado",
-         main="",ylab="Densidade")
+         main="",ylab="Densidade",cex.axis=1.5, cex.main=1.3, cex.lab = 1.3,
+         col="#108A0C")
     #
-    qqPlot((mresiduo[,var]),dist="norm",mean=0,sd=1,col.lines=1,
-           grid="FALSE",xlab="Quantil da N(0,1)",
-           ylab=paste("Quantil do resíduo studentizado"),cex=1.2)
+    qqPlot((mresiduo[,var]),dist="norm", id=F, grid="FALSE",
+           mean=0,sd=1,col.lines="#80009A",pch = 19, col="#108A0C",
+           ylab=paste("Quantil do resíduo studentizado"),
+           xlab="Quantil da N(0,1)", main="")
   }
   
   else if (wplot == "envelope")
   {
     par(mfrow =c(1,1))
     qqPlot((mresiduo[,var]),dist="norm",mean=0,sd=1,col.lines=1,
-           grid="FALSE",xlab="quantil da N(0,1)",
+           grid="FALSE",xlab="quantil da N(0,1)", pch = 19,
            ylab=paste("quantil do resíduo studentizado"),cex=1.2)
   }
 }
